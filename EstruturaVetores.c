@@ -109,8 +109,33 @@ int excluirNumeroDoFinaldaEstrutura(int posicao){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){
-    int retorno = SUCESSO;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    if (estruturaAuxiliarEstaVazia(posicao))
+        return ESTRUTURA_AUXILIAR_VAZIA;
+
+    int removerTodasOcorrencias = 1;
+    int quantidadeRemovida = 0;
+    int i, j;
+    for (i = 0, j = 0; j < estruturaPrincipal[posicao].espacoUtilizado; i += 1, j += 1){
+        if (estruturaPrincipal[posicao].estruturaAuxiliar[i] == valor && removerTodasOcorrencias){
+            j += 1;
+            quantidadeRemovida += 1;
+            //removerTodasOcorrencias = 0; // iguale a 0 para remover apenas o primeiro item encontrado
+        }
+        estruturaPrincipal[posicao].estruturaAuxiliar[i] = estruturaPrincipal[posicao].estruturaAuxiliar[j];
+    }
+
+    if (quantidadeRemovida == 0)
+        return NUMERO_INEXISTENTE;
+
+    estruturaPrincipal[posicao].espacoUtilizado -= quantidadeRemovida;
+    return SUCESSO;
 }
 
 // se posição é um valor válido {entre 1 e 10}
