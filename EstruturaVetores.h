@@ -10,9 +10,15 @@
 #define NOVO_TAMANHO_INVALIDO -10
 #define TODAS_ESTRUTURAS_AUXILIARES_VAZIAS -11
 
+typedef struct cell {
+	int tamanho;
+	int espacoUtilizado;
+	int *estruturaAuxiliar;
+} Celula;
+
 typedef struct reg {
 	int conteudo;
-  struct reg *prox;
+	struct reg *prox;
 } No;
 
 
@@ -29,6 +35,9 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao);
 No* montarListaEncadeadaComCabecote();
 void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]);
 void destruirListaEncadeadaComCabecote(No* inicio);
+int existeEstruturaAuxiliar(int posicao);
+int ehPosicaoValida(int posicao);
+int ehTamanhoValido(int tamanho);
 
 void inicializar();
 void finalizar();
