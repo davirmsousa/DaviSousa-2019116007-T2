@@ -80,8 +80,19 @@ int inserirNumeroEmEstrutura(int valor, int posicao){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int excluirNumeroDoFinaldaEstrutura(int posicao){
-    int retorno = SUCESSO;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    if (estruturaAuxiliarEstaVazia(posicao))
+        return ESTRUTURA_AUXILIAR_VAZIA;
+
+    estruturaPrincipal[posicao].espacoUtilizado -= 1;
+
+    return SUCESSO;
 }
 
 /*
@@ -117,7 +128,7 @@ int ehTamanhoValido(int tamanho){
 }
 
 /*
-    Objetivo: verificar se a estrutur principal possui uma estrutura auxilinar
+    Objetivo: verificar se a estrutura principal possui uma estrutura auxiliar
     na posição determinada.
 
     Retorno (int)
@@ -128,6 +139,19 @@ int existeEstruturaAuxiliar(int posicao){
     if (estruturaPrincipal[posicao].estruturaAuxiliar == NULL)
         return 0;
     return 1;
+}
+
+/*
+    Objetivo: verificar se a estrutura auxiliar determinada está vazia.
+
+    Retorno (int)
+        1 - vazia
+        0 - possui algum elemento
+*/
+int estruturaAuxiliarEstaVazia(int posicao){
+    if (estruturaPrincipal[posicao].espacoUtilizado == 0)
+        return 1;
+    return 0;
 }
 
 /*
