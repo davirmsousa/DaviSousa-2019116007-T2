@@ -51,27 +51,21 @@ int criarEstruturaAuxiliar(int tamanho, int posicao){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int inserirNumeroEmEstrutura(int valor, int posicao){
-    int retorno = 0;
-    int existeEstruturaAuxiliar = 0;
-    int temEspaco = 0;
-    int posicao_invalida = 0;
-    if (posicao_invalida){
-        retorno = POSICAO_INVALIDA;
-    }
-    else{
-        // testar se existe a estrutura auxiliar
-        if (existeEstruturaAuxiliar){
-          if (temEspaco){
-              //insere
-              retorno = SUCESSO;
-          }else{
-              retorno = SEM_ESPACO;
-          }
-        }else{
-          retorno = SEM_ESTRUTURA_AUXILIAR;
-        }
-    }
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    if (!temEspaco(posicao))
+        return SEM_ESPACO;
+
+    int iAuxiliar = estruturaPrincipal[posicao].espacoUtilizado;
+    estruturaPrincipal[posicao].estruturaAuxiliar[iAuxiliar] = valor;
+    estruturaPrincipal[posicao].espacoUtilizado += 1;
+    
+    return SUCESSO;
 }
 
 /*
@@ -132,6 +126,20 @@ int ehTamanhoValido(int tamanho){
 */
 int existeEstruturaAuxiliar(int posicao){
     if (estruturaPrincipal[posicao].estruturaAuxiliar == NULL)
+        return 0;
+    return 1;
+}
+
+/*
+    Objetivo: verificar se a estrutur auxiliar informada ainda tem espaço para inserir
+    valores.
+
+    Retorno (int)
+        1 - tem espaço
+        0 - não tem espaço
+*/
+int temEspaco(int posicao){
+    if (estruturaPrincipal[posicao].espacoUtilizado == estruturaPrincipal[posicao].tamanho)
         return 0;
     return 1;
 }

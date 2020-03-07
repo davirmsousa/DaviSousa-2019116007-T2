@@ -38,6 +38,7 @@ void destruirListaEncadeadaComCabecote(No* inicio);
 int existeEstruturaAuxiliar(int posicao);
 int ehPosicaoValida(int posicao);
 int ehTamanhoValido(int tamanho);
+int temEspaco(int posicao);
 
 void inicializar();
 void finalizar();
