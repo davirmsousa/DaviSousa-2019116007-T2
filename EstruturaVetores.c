@@ -203,8 +203,18 @@ int temEspaco(int posicao){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-    int retorno = 0;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    int i;
+    for (i = 0; i < estruturaPrincipal[posicao].espacoUtilizado; i += 1)
+        vetorAux[i] = estruturaPrincipal[posicao].estruturaAuxiliar[i];
+
+    return SUCESSO;
 }
 
 /*
