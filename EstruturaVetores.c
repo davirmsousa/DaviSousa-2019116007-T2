@@ -111,15 +111,15 @@ int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){
 // se posição é um valor válido {entre 1 e 10}
 int ehPosicaoValida(int posicao){
     if (posicao < 1 || posicao > 10)
-        return POSICAO_INVALIDA;
-    return SUCESSO;
+        return 0;
+    return 1;
 }
 
 // se tamanho é um valor válido {entre 1 e 10}
 int ehTamanhoValido(int tamanho){
     if (tamanho <= 0)
-        return TAMANHO_INVALIDO;
-    return SUCESSO;
+        return 0;
+    return 1;
 }
 
 /*
