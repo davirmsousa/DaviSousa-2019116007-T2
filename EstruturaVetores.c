@@ -291,6 +291,20 @@ void Ordenar(int vetor[], int tamanho){
         TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - quando nenhuma posição da estrutura principal possui um auxiliar com valor
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
+    int _;
+    return getValoresDeTodasEstruturasAuxiliares(vetorAux, &_);
+}
+
+/*
+    Objetivo: retorna os números de todas as estruturas auxiliares.
+    os números devem ser armazenados em vetorAux e a quantidade total de itens obtidos devem ser
+    inseridos no ponteiro total
+
+    Retorno (int)
+        SUCESSO - recuperado com sucesso os valores de todas as estruturas
+        TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - quando nenhuma posição da estrutura principal possui um auxiliar com valor
+*/
+int getValoresDeTodasEstruturasAuxiliares(int vetorAux[], int *total){
     int algumaEstruturaAuxiliarTemItem = 0, i, j, vetorAuxIndex = 0;
     for (i = 0; i < TAM; i += 1){
         int auxiliarNaoNula = estruturaPrincipal[i].estruturaAuxiliar != NULL;
@@ -301,6 +315,7 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
                 vetorAux[vetorAuxIndex] = estruturaPrincipal[i].estruturaAuxiliar[j];
         }
     }
+    *total = vetorAuxIndex;
     if (algumaEstruturaAuxiliarTemItem) return SUCESSO;
     else return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
 }
@@ -310,13 +325,17 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
     os números devem ser armazenados em vetorAux
 
     Retorno (int)
-        SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
-        SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
-        POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+        SUCESSO - recuperado com sucesso os valores de todas as estruturas
+        TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - quando nenhuma posição da estrutura principal possui um auxiliar com valor
 */
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]){
-    int retorno = 0;
-    return retorno;
+    int totalDeItens;
+    if (getValoresDeTodasEstruturasAuxiliares(vetorAux, &totalDeItens) == TODAS_ESTRUTURAS_AUXILIARES_VAZIAS)
+        return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+
+    Ordenar(vetorAux, totalDeItens);
+
+    return SUCESSO;
 }
 
 /*
