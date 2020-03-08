@@ -22,7 +22,7 @@ int main(){
     testeCriarEstrutura();
     testeInserirComEstrutura();
     testeExcluir();
-    //testeExcluirNumeroEspecificoDeEstrutura();
+    testeExcluirNumeroEspecificoDeEstrutura();
     testeListar();
     testeRetornarTodosNumeros();
     testeMudarTamanhoEstrutura();
@@ -117,6 +117,15 @@ void testeExcluirNumeroEspecificoDeEstrutura(){
     printf("%d\n",excluirNumeroEspecificoDeEstrutura(6, 9) == SUCESSO);
     printf("%d\n",getDadosEstruturaAuxiliar(9, vet) == SUCESSO);
     printf("%d\n", (vet[0] == 1 && vet[1] == 4));
+
+    printf("%d\n",excluirNumeroEspecificoDeEstrutura(1, 9) == SUCESSO);
+    printf("%d\n",getDadosEstruturaAuxiliar(9, vet) == SUCESSO);
+    printf("%d\n", (vet[0] == 4));
+
+    vet[0] = -1;
+    printf("%d\n",excluirNumeroEspecificoDeEstrutura(4, 9) == SUCESSO);
+    printf("%d\n",getDadosEstruturaAuxiliar(9, vet) == SUCESSO);
+    printf("%d\n", (vet[0] == -1));
 } 
 /*
     2 [ , , ]
