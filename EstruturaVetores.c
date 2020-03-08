@@ -403,7 +403,26 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
         No*, ponteiro para o início da lista com cabeçote
 */
 No* montarListaEncadeadaComCabecote(){
-    return NULL;
+    No *inicio = (No *) malloc(sizeof(No));
+    inicio->prox = NULL;
+    No *fim = inicio;
+    int algumaEstruturaAuxiliarTemItem = 0, i, j;
+    for (i = 0; i < TAM; i += 1){
+        int auxiliarNaoNula = estruturaPrincipal[i].estruturaAuxiliar != NULL;
+        int temItem = estruturaPrincipal[i].espacoUtilizado > 0;
+        if (auxiliarNaoNula && temItem){
+            algumaEstruturaAuxiliarTemItem = 1;
+            for (j = 0; j < estruturaPrincipal[i].espacoUtilizado; j += 1){
+                fim->conteudo = estruturaPrincipal[i].estruturaAuxiliar[j];
+                fim->prox = (No *) malloc(sizeof(No));
+                
+                fim = fim->prox;
+                fim->prox = NULL;
+            }
+        }
+    }
+    if (algumaEstruturaAuxiliarTemItem) return inicio;
+    else return NULL;
 }
 
 /*
@@ -412,14 +431,29 @@ No* montarListaEncadeadaComCabecote(){
     Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
+    No* item = inicio;
+    int vetorAuxindex = 0;
+    while (item != NULL){
+        vetorAux[vetorAuxindex] = item->conteudo;
+        vetorAuxindex += 1;
+        item = item->prox;
+    }
 }
 
 /*
+    TODO: ta errado isso aqui ó... tem que mudar isso po, da pra ficar assim não
+    suspeita: a função getDadosListaEncadeadaComCabecote deve estar alterando o ponteiro inicio
+
     Objetivo: Destruir a lista encadeada com cabeçote a partir de início.
 
     Retorno void.
 */
 void destruirListaEncadeadaComCabecote(No* inicio){
+    while (inicio != NULL){
+        No* p = inicio->prox;
+        free(inicio);
+        inicio = p;
+    }
 }
 
 /*
