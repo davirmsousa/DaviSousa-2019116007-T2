@@ -22,7 +22,7 @@ int main(){
     testeCriarEstrutura();
     testeInserirComEstrutura();
     testeExcluir();
-    testeExcluirNumeroEspecificoDeEstrutura();
+    //testeExcluirNumeroEspecificoDeEstrutura();
     testeListar();
     testeRetornarTodosNumeros();
     testeMudarTamanhoEstrutura();

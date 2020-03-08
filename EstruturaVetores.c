@@ -287,13 +287,22 @@ void Ordenar(int vetor[], int tamanho){
     os números devem ser armazenados em vetorAux
 
     Retorno (int)
-        SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
-        SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
-        POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+        SUCESSO - recuperado com sucesso os valores de todas as estruturas
+        TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - quando nenhuma posição da estrutura principal possui um auxiliar com valor
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
-    int retorno = 0;
-    return retorno;
+    int algumaEstruturaAuxiliarTemItem = 0, i, j, vetorAuxIndex = 0;
+    for (i = 0; i < TAM; i += 1){
+        int auxiliarNaoNula = estruturaPrincipal[i].estruturaAuxiliar != NULL;
+        int temItem = estruturaPrincipal[i].espacoUtilizado > 0;
+        if (auxiliarNaoNula && temItem){
+            algumaEstruturaAuxiliarTemItem = 1;
+            for (j = 0; j < estruturaPrincipal[i].espacoUtilizado; j += 1, vetorAuxIndex += 1)
+                vetorAux[vetorAuxIndex] = estruturaPrincipal[i].estruturaAuxiliar[j];
+        }
+    }
+    if (algumaEstruturaAuxiliarTemItem) return SUCESSO;
+    else return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
 }
 
 /*
