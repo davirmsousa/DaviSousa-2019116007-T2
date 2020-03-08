@@ -245,8 +245,41 @@ int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-    int retorno = 0;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    int i, totalDeItens = estruturaPrincipal[posicao].espacoUtilizado;
+
+    getDadosEstruturaAuxiliar(posicao, vetorAux);
+
+    Ordenar(vetorAux, totalDeItens);
+
+    return SUCESSO;
+}
+
+/*
+    Objetivo: ordenar um vetor 'vetor' que tem um tamanho 'tamanho' em ordem crescente
+    utilizando o algoritmo selection sort
+
+    Retorno void
+*/
+void Ordenar(int vetor[], int tamanho){ 
+  int i, j, min, aux;
+  for (i = 0; i < (tamanho - 1); i += 1){
+     min = i;
+     for (j = (i + 1); j < tamanho; j += 1)
+       if(vetor[j] < vetor[min]) 
+         min = j;
+     if (vetor[i] != vetor[min]){
+       aux = vetor[i];
+       vetor[i] = vetor[min];
+       vetor[min] = aux;
+     }
+  }
 }
 
 /*

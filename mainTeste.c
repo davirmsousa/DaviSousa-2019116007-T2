@@ -28,7 +28,8 @@ int main(){
     testeMudarTamanhoEstrutura();
     testeListaEncadeada();
     finalizar();
-    getchar();
+    
+    printf("\n\nPressione qualquer tecla... "); getchar();
 } 
 
 int ligado = 1;

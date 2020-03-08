@@ -38,6 +38,7 @@ void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]);
 void destruirListaEncadeadaComCabecote(No* inicio);
 int estruturaAuxiliarEstaVazia(int posicao);
 int existeEstruturaAuxiliar(int posicao);
+void Ordenar(int vetor[], int tamanho);
 int ehPosicaoValida(int posicao);
 int ehTamanhoValido(int tamanho);
 int temEspaco(int posicao);
