@@ -109,6 +109,24 @@ int excluirNumeroDoFinaldaEstrutura(int posicao){
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
 int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){
+    return excluirNumeroDeEstrutura(valor, posicao, 0);
+}
+
+/*
+    Objetivo: excluir o numero 'valor' da estrutura auxiliar da posição 'posicao'. Caso 'removerTodasOcorrencias'
+    seja 1 todas as ocorrências do numero 'valor' serão excluídas, caso contrário apenas a primeira ocorrência será excluída
+    Caso seja excluido, os números posteriores devem ser movidos para as posições anteriores
+    ex: suponha os valores [3, 8, 7, 9,  ,  ] onde deve ser excluido o valor 8. A estrutura deve ficar da seguinte forma [3, 7, 9,  ,  ,  ]
+    Obs. Esta é uma exclusão lógica
+    
+    Retorno (int)
+        SUCESSO - excluido com sucesso 'valor' da estrutura na posição 'posicao'
+        ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
+        SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+        NUMERO_INEXISTENTE - Número não existe
+        POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+*/
+int excluirNumeroDeEstrutura(int valor, int posicao, int removerTodasOcorrencias){
     if (!ehPosicaoValida(posicao))
         return POSICAO_INVALIDA;
 
@@ -119,15 +137,14 @@ int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){
     if (estruturaAuxiliarEstaVazia(posicao))
         return ESTRUTURA_AUXILIAR_VAZIA;
 
-    int removerTodasOcorrencias = 1;
-    int quantidadeRemovida = 0;
     int i, j;
-    for (i = 0, j = 0; j < estruturaPrincipal[posicao].espacoUtilizado; i += 1, j += 1){
-        if (estruturaPrincipal[posicao].estruturaAuxiliar[i] == valor && removerTodasOcorrencias){
-            j += 1;
-            quantidadeRemovida += 1;
-            //removerTodasOcorrencias = 0; // iguale a 0 para remover apenas o primeiro item encontrado
-        }
+    int quantidadeRemovida = 0;
+
+    for (i = 0, j = 0; j < estruturaPrincipal[posicao].espacoUtilizado;){
+        int continuarApagando = removerTodasOcorrencias || quantidadeRemovida == 0;
+        int valorEncontrado = estruturaPrincipal[posicao].estruturaAuxiliar[i] == valor;
+        if (valorEncontrado && continuarApagando){ j += 1; quantidadeRemovida += 1; }
+        else{ i += 1; j += 1; }
         estruturaPrincipal[posicao].estruturaAuxiliar[i] = estruturaPrincipal[posicao].estruturaAuxiliar[j];
     }
 
@@ -135,6 +152,7 @@ int excluirNumeroEspecificoDeEstrutura(int valor, int posicao){
         return NUMERO_INEXISTENTE;
 
     estruturaPrincipal[posicao].espacoUtilizado -= quantidadeRemovida;
+
     return SUCESSO;
 }
 
