@@ -403,9 +403,7 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
         No*, ponteiro para o início da lista com cabeçote
 */
 No* montarListaEncadeadaComCabecote(){
-    No *inicio = (No *) malloc(sizeof(No));
-    inicio->prox = NULL;
-    No *fim = inicio;
+    No *inicio = NULL, *fim = NULL;
     int algumaEstruturaAuxiliarTemItem = 0, i, j;
     for (i = 0; i < TAM; i += 1){
         int auxiliarNaoNula = estruturaPrincipal[i].estruturaAuxiliar != NULL;
@@ -413,10 +411,12 @@ No* montarListaEncadeadaComCabecote(){
         if (auxiliarNaoNula && temItem){
             algumaEstruturaAuxiliarTemItem = 1;
             for (j = 0; j < estruturaPrincipal[i].espacoUtilizado; j += 1){
-                fim->conteudo = estruturaPrincipal[i].estruturaAuxiliar[j];
-                fim->prox = (No *) malloc(sizeof(No));
-                
-                fim = fim->prox;
+                No * novoNo = (No *) malloc(sizeof(No *));
+                novoNo->conteudo = estruturaPrincipal[i].estruturaAuxiliar[j];
+                novoNo->prox = NULL;
+                if (inicio == NULL) inicio = novoNo;
+                else fim->prox = novoNo;
+                fim = novoNo;
                 fim->prox = NULL;
             }
         }
@@ -431,13 +431,9 @@ No* montarListaEncadeadaComCabecote(){
     Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
-    No* item = inicio;
-    int vetorAuxindex = 0;
-    while (item != NULL){
+    No* item = inicio; int vetorAuxindex;
+    for (vetorAuxindex = 0; item != NULL; vetorAuxindex += 1, item = item->prox)
         vetorAux[vetorAuxindex] = item->conteudo;
-        vetorAuxindex += 1;
-        item = item->prox;
-    }
 }
 
 /*
@@ -449,10 +445,10 @@ void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
     Retorno void.
 */
 void destruirListaEncadeadaComCabecote(No* inicio){
-    while (inicio != NULL){
-        No* p = inicio->prox;
+    for (; inicio != NULL;){
+        No* auxiliar = inicio->prox;
         free(inicio);
-        inicio = p;
+        inicio = auxiliar;
     }
 }
 
