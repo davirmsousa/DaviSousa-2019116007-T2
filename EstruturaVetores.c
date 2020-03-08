@@ -350,8 +350,26 @@ int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]){
         SEM_ESPACO_DE_MEMORIA - erro na alocação do novo valor
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
-    int retorno = 0;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    novoTamanho += estruturaPrincipal[posicao].tamanho;
+    if (!ehTamanhoValido(novoTamanho))
+        return NOVO_TAMANHO_INVALIDO;
+
+    estruturaPrincipal[posicao].estruturaAuxiliar = (int *) realloc(estruturaPrincipal[posicao].estruturaAuxiliar, novoTamanho * sizeof(int));
+    if (estruturaPrincipal[posicao].estruturaAuxiliar == NULL)
+        return SEM_ESPACO_DE_MEMORIA;
+
+    estruturaPrincipal[posicao].tamanho = novoTamanho;
+    int _espacoUtilizado = estruturaPrincipal[posicao].espacoUtilizado;
+    estruturaPrincipal[posicao].espacoUtilizado = novoTamanho < _espacoUtilizado ? novoTamanho : _espacoUtilizado;
+
+    return SUCESSO;
 }
 
 /*
@@ -364,8 +382,17 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
         Um número int > 0 correpondente a quantidade de elementos preenchidos da estrutura
 */
 int getQuantidadeElementosEstruturaAuxiliar(int posicao){
-    int retorno = 0;
-    return retorno;
+    if (!ehPosicaoValida(posicao))
+        return POSICAO_INVALIDA;
+
+    posicao -= 1;
+    if (!existeEstruturaAuxiliar(posicao))
+        return SEM_ESTRUTURA_AUXILIAR;
+
+    if (estruturaAuxiliarEstaVazia(posicao))
+        return ESTRUTURA_AUXILIAR_VAZIA;
+
+    return estruturaPrincipal[posicao].espacoUtilizado;
 }
 
 /*
