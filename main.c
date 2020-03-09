@@ -16,11 +16,11 @@ int aguardar(unsigned ms);
 
 int main(int argc, char const *argv[]){
 	int opcao;
+	inicializar();
 	do{
 		opcao = menu();
 		switch(opcao){
-			case 1:
-			break;
+			case 1: gerenciarInsercao(); break;
 			case 2:
 			break;
 			case 3:
@@ -31,15 +31,24 @@ int main(int argc, char const *argv[]){
 			break;
 			case 6:
 			break;
-			case 7:
-			break;
+			case 7: finalizar(); break;
 			default:
 				printf("Valor invalido...\n");
-				aguardar(1000);
 			break;
 		}
+		aguardar(1000);
 	}while(opcao != 7);
 	return 0;
+}
+
+void gerenciarInsercao(){
+	int posicao = 0, valor = 0, retorno;
+	printf("Digite a posicao onde deseja inserir: "); scanf("%d", &posicao);
+	printf("Digite o valor que deseja inserir: "); scanf("%d", &valor);
+	retorno = inserirNumeroEmEstrutura(valor, posicao);
+	if (retorno == SUCESSO){
+		printf("Estrutura criada com sucesso!");
+	}
 }
 
 int menu(){
