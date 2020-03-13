@@ -403,7 +403,8 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
         No*, ponteiro para o início da lista com cabeçote
 */
 No* montarListaEncadeadaComCabecote(){
-    No *inicio = NULL, *fim = NULL;
+    No *inicio = (No *) malloc(sizeof(No)), *temp = NULL, *novoNo = NULL;
+    inicio->prox = NULL;
     int algumaEstruturaAuxiliarTemItem = 0, i, j;
     for (i = 0; i < TAM; i += 1){
         int auxiliarNaoNula = estruturaPrincipal[i].estruturaAuxiliar != NULL;
@@ -411,13 +412,12 @@ No* montarListaEncadeadaComCabecote(){
         if (auxiliarNaoNula && temItem){
             algumaEstruturaAuxiliarTemItem = 1;
             for (j = 0; j < estruturaPrincipal[i].espacoUtilizado; j += 1){
-                No * novoNo = (No *) malloc(sizeof(No *));
+                novoNo = (No *) malloc(sizeof(No));
                 novoNo->conteudo = estruturaPrincipal[i].estruturaAuxiliar[j];
                 novoNo->prox = NULL;
-                if (inicio == NULL) inicio = novoNo;
-                else fim->prox = novoNo;
-                fim = novoNo;
-                fim->prox = NULL;
+                for (temp = inicio; temp->prox != NULL;)
+                    temp = temp->prox;
+                temp->prox = novoNo;
             }
         }
     }
@@ -431,7 +431,8 @@ No* montarListaEncadeadaComCabecote(){
     Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
-    No* item = inicio; int vetorAuxindex;
+    int vetorAuxindex;
+    No* item = inicio->prox;
     for (vetorAuxindex = 0; item != NULL; vetorAuxindex += 1, item = item->prox)
         vetorAux[vetorAuxindex] = item->conteudo;
 }
