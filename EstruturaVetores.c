@@ -438,19 +438,18 @@ void getDadosListaEncadeadaComCabecote(No* inicio, int vetorAux[]){
 }
 
 /*
-    TODO: ta errado isso aqui ó... tem que mudar isso po, da pra ficar assim não
-    suspeita: a função getDadosListaEncadeadaComCabecote deve estar alterando o ponteiro inicio
-
     Objetivo: Destruir a lista encadeada com cabeçote a partir de início.
 
     Retorno void.
 */
-void destruirListaEncadeadaComCabecote(No* inicio){
-    for (; inicio != NULL;){
-        No* auxiliar = inicio->prox;
-        free(inicio);
-        inicio = auxiliar;
+void destruirListaEncadeadaComCabecote(No** inicio){
+    No* elemento = *inicio;
+    for (; elemento != NULL;){
+        No* auxiliar = elemento->prox;
+        free(elemento);
+        elemento = auxiliar;
     }
+    *inicio = NULL;
 }
 
 /*
